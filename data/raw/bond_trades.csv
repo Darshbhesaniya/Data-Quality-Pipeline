@@ -1,0 +1,101 @@
+trade_id,bond_name,issuer,price,quantity,coupon_rate,maturity_date
+1001,Treasury 10Y,State Authority,97.45,250,6.42,2029-12-29
+1002,Corporate Bond A,Green Energy Ltd,95.32,100,3.31,2039-09-23
+1003,Treasury 10Y,Global Bank,102.16,2000,4.52,2038-10-30
+1004,Infrastructure Bond,US Government,102.59,250,6.19,2037-07-27
+1005,Infrastructure Bond,XYZ Industries,97.15,500,2.61,2035-02-16
+1006,Corporate Bond A,Metro Finance,-99.5,2000,3.59,2036-01-07
+1007,Corporate Bond C,ABC Corp,104.73,1000,2.47,2028-06-20
+1008,Green Bond,Global Bank,102.05,100,5.97,2034-01-26
+1009,Corporate Bond A,Global Bank,103.66,1000,3.67,2033-12-26
+1010,Corporate Bond B,Metro Finance,98.55,500,6.21,2035-09-05
+1011,Corporate Bond B,,96.63,1000,3.62,2029-02-04
+1012,Municipal Bond,Metro Finance,103.43,100,3.37,2039-12-27
+1013,Green Bond,Green Energy Ltd,97.68,250,7.48,2028-03-19
+1014,Green Bond,Global Bank,101.55,1000,7.31,2040-03-20
+1015,Corporate Bond B,State Authority,96.4,2000,5.23,2037-10-14
+1016,Treasury 5Y,Green Energy Ltd,98.62,250,5.06,2040-08-09
+1017,Treasury 10Y,ABC Corp,96.53,250,6.75,2029-07-14
+1018,Corporate Bond A,Green Energy Ltd,98.82,1000,5.17,2036-12-18
+1019,Treasury 10Y,ABC Corp,101.82,2000,6.51,2039-11-27
+1020,Corporate Bond A,State Authority,99.35,1000,2.02,2035-02-15
+1021,Corporate Bond B,ABC Corp,103.71,0,7.05,2033-05-27
+1022,Municipal Bond,XYZ Industries,98.74,250,5.24,2038-11-18
+1023,Treasury 10Y,Metro Finance,99.89,100,7.57,2039-05-23
+1024,Municipal Bond,US Government,97.41,2000,7.68,2034-05-24
+1025,Corporate Bond C,ABC Corp,104.78,2000,6.6,2029-06-01
+1026,Corporate Bond C,XYZ Industries,97.65,2000,4.54,2030-05-17
+1027,Municipal Bond,State Authority,98.99,500,4.63,2032-03-31
+1028,Corporate Bond C,ABC Corp,97.48,100,4.03,2039-02-07
+1029,Municipal Bond,Global Bank,95.07,100,3.37,2040-09-09
+1030,Green Bond,ABC Corp,100.14,500,6.01,2028-03-14
+1031,,City Council,97.43,1000,6.84,2032-04-20
+1032,Corporate Bond A,ABC Corp,101.59,500,4.54,2031-10-07
+1033,Treasury 10Y,ABC Corp,95.61,500,6.8,2037-12-20
+1034,Municipal Bond,Global Bank,96.9,1000,2.84,2029-12-12
+1035,Infrastructure Bond,City Council,97.5,100,4.66,2031-08-12
+1036,Corporate Bond A,US Government,101.52,2000,7.02,2039-11-03
+1037,Municipal Bond,XYZ Industries,99.06,1000,3.28,2029-08-03
+1038,Treasury 10Y,XYZ Industries,98.79,1000,3.59,2036-06-28
+1039,Infrastructure Bond,Green Energy Ltd,101.97,2000,5.97,2037-09-13
+1040,Corporate Bond B,Global Bank,97.97,100,5.48,2038-05-30
+1040,Treasury 10Y,Metro Finance,95.57,2000,4.86,2039-08-28
+1042,Corporate Bond B,US Government,104.61,100,7.11,2039-05-29
+1043,Corporate Bond A,Global Bank,99.04,2000,3.48,2029-01-12
+1044,Treasury 10Y,ABC Corp,99.19,2000,5.39,2040-10-30
+1045,Infrastructure Bond,Global Bank,101.7,500,3.43,2034-08-04
+1046,Corporate Bond B,State Authority,99.57,100,2.06,2036-05-16
+1047,Corporate Bond A,ABC Corp,100.38,2000,3.59,2041-06-05
+1048,Corporate Bond A,Global Bank,98.7,250,4.63,2035-04-29
+1049,Infrastructure Bond,US Government,101.68,2000,3.8,2039-09-06
+1050,Corporate Bond B,State Authority,96.15,100,6.45,2029-10-26
+1051,Infrastructure Bond,State Authority,101.05,500,3.22,2030-12-25
+1052,Corporate Bond C,State Authority,104.05,100,2.55,2033-06-01
+1053,Infrastructure Bond,US Government,95.04,250,5.82,2036-12-29
+1054,Corporate Bond B,City Council,100.52,1000,5.37,2033-05-15
+1055,Corporate Bond A,XYZ Industries,100.46,500,5.5,2030-01-02
+1056,Treasury 5Y,XYZ Industries,95.42,500,7.39,2030-10-26
+1057,Green Bond,Global Bank,101.82,100,4.12,2028-05-22
+1058,Treasury 5Y,XYZ Industries,104.26,250,7.19,2040-01-20
+1059,Treasury 5Y,US Government,96.79,500,6.69,2031-06-20
+1060,Municipal Bond,State Authority,96.59,100,4.3,2036-09-23
+1061,Corporate Bond C,Global Bank,97.0,1000,4.1,2028-05-13
+1062,Municipal Bond,US Government,101.6,1000,3.97,2032-08-07
+1063,Infrastructure Bond,Metro Finance,101.41,1000,6.08,2029-01-19
+1064,Green Bond,US Government,96.15,500,3.07,2039-07-10
+1065,Treasury 10Y,ABC Corp,100.97,500,6.37,2033-06-13
+1066,Treasury 5Y,ABC Corp,98.85,2000,3.14,2034-07-13
+1067,Treasury 5Y,US Government,100.2,2000,6.12,2028-06-28
+1068,Green Bond,Green Energy Ltd,95.7,500,5.74,2031-12-01
+1069,Infrastructure Bond,State Authority,101.67,500,4.41,2030-04-16
+1070,Corporate Bond B,Global Bank,99.2,1000,6.06,2034-02-16
+1071,Infrastructure Bond,Green Energy Ltd,100.48,100,3.82,2031-05-26
+1072,Treasury 5Y,Metro Finance,99.65,1000,6.05,2032-03-17
+1073,Corporate Bond C,XYZ Industries,101.59,500,5.09,2038-12-17
+1074,Green Bond,ABC Corp,103.18,250,6.04,2041-05-20
+1075,Municipal Bond,XYZ Industries,95.24,250,7.9,2032-07-14
+1076,Corporate Bond A,City Council,99.14,2000,3.17,2041-03-16
+1077,Corporate Bond C,Green Energy Ltd,97.44,100,7.36,2036-02-09
+1078,Treasury 5Y,Global Bank,96.76,2000,4.79,2029-11-20
+1079,Municipal Bond,ABC Corp,99.56,1000,6.01,2039-12-31
+1080,Green Bond,City Council,101.13,2000,4.56,2040-01-12
+1081,Corporate Bond C,XYZ Industries,102.44,1000,4.7,2039-10-14
+1082,Infrastructure Bond,City Council,101.27,500,4.64,2033-01-15
+1083,Municipal Bond,State Authority,98.36,2000,2.48,2033-11-26
+1084,Municipal Bond,Green Energy Ltd,101.94,250,2.39,2030-11-17
+1085,Green Bond,City Council,99.16,250,7.0,2036-08-21
+1086,Treasury 10Y,Green Energy Ltd,99.77,500,3.79,2036-03-25
+1087,Treasury 5Y,Global Bank,99.88,500,4.62,2036-03-29
+1088,Treasury 5Y,Metro Finance,101.69,1000,6.35,2028-02-23
+1089,Corporate Bond B,US Government,104.07,2000,5.39,2037-12-23
+1090,Corporate Bond A,Green Energy Ltd,96.36,1000,3.09,2028-02-08
+1091,Treasury 5Y,Metro Finance,97.12,500,4.03,2033-05-01
+1092,Infrastructure Bond,Green Energy Ltd,97.52,100,4.82,2035-12-31
+1093,Treasury 10Y,Metro Finance,97.24,100,6.69,2039-08-05
+1094,Treasury 10Y,Global Bank,96.99,100,5.73,2028-05-25
+1095,Corporate Bond B,City Council,101.69,2000,7.69,2032-11-05
+1096,Infrastructure Bond,Metro Finance,96.68,2000,7.78,2037-12-04
+1097,Corporate Bond B,State Authority,96.08,100,7.57,2030-01-24
+1098,Treasury 5Y,Green Energy Ltd,104.41,250,2.46,2040-05-29
+1099,Corporate Bond A,State Authority,103.5,2000,6.83,2032-12-10
+1100,Treasury 10Y,Metro Finance,100.33,500,2.41,2040-03-10

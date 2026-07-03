@@ -1,0 +1,50 @@
+services:
+  spark-master:
+    build: .
+    container_name: spark-master
+    hostname: spark-master
+
+    command: >
+      /opt/spark/bin/spark-class
+      org.apache.spark.deploy.master.Master
+
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+
+    volumes:
+      - ./apps:/opt/spark/apps
+      - ./data:/opt/spark/data
+
+  spark-worker:
+    build: .
+    container_name: spark-worker
+    hostname: spark-worker
+
+    command: >
+      /opt/spark/bin/spark-class
+      org.apache.spark.deploy.worker.Worker
+      spark://spark-master:7077
+
+    depends_on:
+      - spark-master
+
+    volumes:
+      - ./apps:/opt/spark/apps
+      - ./data:/opt/spark/data
+
+  mongodb:
+    image: mongo:8.0
+    container_name: mongodb
+    hostname: mongodb
+
+    ports:
+      - "27018:27017"
+
+    volumes:
+      - mongo-data:/data/db
+
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
