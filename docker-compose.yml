@@ -46,5 +46,127 @@ services:
 
     restart: unless-stopped
 
+  # ---------------------------
+  # Airflow Metadata Database
+  # ---------------------------
+  postgres:
+    image: postgres:16
+    container_name: airflow-postgres
+    hostname: postgres
+
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+    restart: unless-stopped
+
+  # ---------------------------
+  # Airflow One-Time Init
+  # ---------------------------
+  airflow-init:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: airflow-init
+    depends_on:
+      - postgres
+
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW_CONN_SPARK_DEFAULT: "spark://spark-master:7077"
+
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/config:/opt/airflow/config
+      - ./apps:/opt/spark/apps
+      - ./data:/opt/spark/data
+
+    entrypoint: >
+      bash -c "
+      airflow db migrate &&
+      airflow users create
+        --username admin
+        --password admin
+        --firstname Admin
+        --lastname User
+        --role Admin
+        --email admin@example.com
+      "
+
+  # ---------------------------
+  # Airflow Webserver (UI)
+  # ---------------------------
+  airflow-webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: airflow-webserver
+    hostname: airflow-webserver
+
+    depends_on:
+      - postgres
+      - airflow-init
+
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__WEBSERVER__SECRET_KEY: "supersecretkey"
+      AIRFLOW_CONN_SPARK_DEFAULT: "spark://spark-master:7077"
+
+    ports:
+      - "8081:8080"
+
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/config:/opt/airflow/config
+      - ./apps:/opt/spark/apps
+      - ./data:/opt/spark/data
+
+    command: webserver
+    restart: unless-stopped
+
+  # ---------------------------
+  # Airflow Scheduler
+  # ---------------------------
+  airflow-scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    container_name: airflow-scheduler
+    hostname: airflow-scheduler
+
+    depends_on:
+      - postgres
+      - airflow-init
+
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW_CONN_SPARK_DEFAULT: "spark://spark-master:7077"
+
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./airflow/logs:/opt/airflow/logs
+      - ./airflow/plugins:/opt/airflow/plugins
+      - ./airflow/config:/opt/airflow/config
+      - ./apps:/opt/spark/apps
+      - ./data:/opt/spark/data
+
+    command: scheduler
+    restart: unless-stopped
+
 volumes:
   mongo-data:
+  postgres-data:

@@ -1,0 +1,28 @@
+FROM apache/airflow:2.10.4
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y default-jdk && \
+    apt-get clean
+
+USER airflow
+
+RUN pip install --no-cache-dir \
+    "apache-airflow-providers-apache-spark" \
+    --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.10.4/constraints-3.12.txt"
+
+RUN pip install --no-cache-dir --force-reinstall pyspark==4.1.1
+
+# This is for mongodb connector JARs because spark-submit driver process run from inside Airflow container 
+RUN mkdir -p /home/airflow/mongo-jars && \
+    curl -L -o /home/airflow/mongo-jars/mongo-spark-connector.jar \
+    https://repo1.maven.org/maven2/org/mongodb/spark/mongo-spark-connector_2.13/10.4.1/mongo-spark-connector_2.13-10.4.1.jar && \
+    curl -L -o /home/airflow/mongo-jars/mongodb-driver-sync.jar \
+    https://repo1.maven.org/maven2/org/mongodb/mongodb-driver-sync/5.1.4/mongodb-driver-sync-5.1.4.jar && \
+    curl -L -o /home/airflow/mongo-jars/bson.jar \
+    https://repo1.maven.org/maven2/org/mongodb/bson/5.1.4/bson-5.1.4.jar && \
+    curl -L -o /home/airflow/mongo-jars/mongodb-driver-core.jar \
+    https://repo1.maven.org/maven2/org/mongodb/mongodb-driver-core/5.1.4/mongodb-driver-core-5.1.4.jar && \
+    curl -L -o /home/airflow/mongo-jars/bson-record-codec.jar \
+    https://repo1.maven.org/maven2/org/mongodb/bson-record-codec/5.1.4/bson-record-codec-5.1.4.jar
