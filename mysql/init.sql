@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS validation_rules (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    rule_name VARCHAR(100) NOT NULL,
+
+    dataset VARCHAR(50) NOT NULL,
+
+    column_name VARCHAR(100) NOT NULL,
+
+    operator VARCHAR(20) NOT NULL,
+
+    rule_value VARCHAR(100),
+
+    error_message VARCHAR(255) NOT NULL,
+
+    is_active BOOLEAN DEFAULT TRUE,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);
