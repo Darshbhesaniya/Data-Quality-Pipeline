@@ -2,6 +2,12 @@ airflow/logs/
 
 airflow/dags/__pycache__/
 
-backend/node_modules
+backend/.gitignore
 
 backend/.env
+
+Frontend/node_modules
+
+Frontend/.env
+
+Frontend/README.md

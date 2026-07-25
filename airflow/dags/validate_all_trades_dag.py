@@ -3,6 +3,7 @@ from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOpe
 from datetime import datetime
 
 MONGO_JARS = (
+    "/home/airflow/mongo-jars/mysql-connector-j-9.3.0.jar,"
     "/home/airflow/mongo-jars/mongo-spark-connector.jar,"
     "/home/airflow/mongo-jars/mongodb-driver-sync.jar,"
     "/home/airflow/mongo-jars/bson.jar,"

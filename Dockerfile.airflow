@@ -25,4 +25,6 @@ RUN mkdir -p /home/airflow/mongo-jars && \
     curl -L -o /home/airflow/mongo-jars/mongodb-driver-core.jar \
     https://repo1.maven.org/maven2/org/mongodb/mongodb-driver-core/5.1.4/mongodb-driver-core-5.1.4.jar && \
     curl -L -o /home/airflow/mongo-jars/bson-record-codec.jar \
-    https://repo1.maven.org/maven2/org/mongodb/bson-record-codec/5.1.4/bson-record-codec-5.1.4.jar
+    https://repo1.maven.org/maven2/org/mongodb/bson-record-codec/5.1.4/bson-record-codec-5.1.4.jar && \
+    curl -L -o /home/airflow/mongo-jars/mysql-connector-j-9.3.0.jar \
+    https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/9.3.0/mysql-connector-j-9.3.0.jar
