@@ -1,6 +1,8 @@
 const express = require("express");
 require("dotenv").config();
 const ruleRoutes = require("./routes/rule.routes");
+const  datasetRoutes = require("./routes/dataset.routes");
+
 
 const cors = require("cors")
 
@@ -15,6 +17,8 @@ app.use(cors({
 app.use(express.json());
 
 app.use("/rules", ruleRoutes);
+
+app.use("/dataset",datasetRoutes)
 
 const errorHandler = require("./middleware/error.middleware");
 app.use(errorHandler)

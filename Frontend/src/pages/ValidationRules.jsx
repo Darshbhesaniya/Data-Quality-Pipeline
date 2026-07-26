@@ -4,13 +4,16 @@ import { Plus, Pencil, Trash2, Search } from "lucide-react";
 import Topbar from "../components/Topbar";
 import Badge from "../components/Badge";
 import { getRules, createRule, updateRule, deleteRule } from "../api/validationRules";
+import { getDatasets, getDatasetColumns } from "../api/datasets";
 
 // Which columns are available for each dataset, shown in the "Create New Rule" form.
-const datasetColumns = {
-  "Equity Trades": ["trade_id", "trade_timestamp", "division", "exchange", "symbol", "company_name", "trade_type", "quantity", "price", "trade_value", "currency", "trader_id", "client_id", "order_type", "status"],
-  "Bond Trades": ["trade_id", "bond_name", "issuer", "price", "quantity", "coupon_rate", "maturity_date"],
-  "Commodity Trades": ["trade_id", "commodity", "price", "quantity", "unit", "trade_date"],
-};
+// const datasetColumns = {
+//   "Equity Trades": ["trade_id", "trade_timestamp", "division", "exchange", "symbol", "company_name", "trade_type", "quantity", "price", "trade_value", "currency", "trader_id", "client_id", "order_type", "status"],
+//   "Bond Trades": ["trade_id", "bond_name", "issuer", "price", "quantity", "coupon_rate", "maturity_date"],
+//   "Commodity Trades": ["trade_id", "commodity", "price", "quantity", "unit", "trade_date"],
+// };
+
+
 
 const operators = [">", ">=", "<", "<=", "=", "==", "!=", "IS NOT NULL", "IS NULL"];
 
@@ -51,6 +54,8 @@ const PAGE_SIZE = 8;
 const ValidationRules = () => {
   const { openSidebar } = useOutletContext();
   const [rules, setRules] = useState(fallbackRules);
+  const [datasets, setDatasets] = useState([]);
+  const [columns, setColumns] = useState([]);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [datasetFilter, setDatasetFilter] = useState("All Datasets");
@@ -60,12 +65,27 @@ const ValidationRules = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    getRules().then(setRules).catch(() => {});
+    getRules().then(setRules).catch(() => { });
   }, []);
+
+  useEffect(() => {
+    getDatasets().then((data) => {
+      setDatasets(data);
+      if (data.length > 0) {
+        setForm((f) => ({ ...f, dataset: data[0].name }));
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (form.dataset) {
+      getDatasetColumns(form.dataset).then(setColumns);
+    }
+  }, [form.dataset]);
 
   // When the chosen dataset changes, default the column to the first valid one for it.
   function handleDatasetChange(dataset) {
-    setForm((f) => ({ ...f, dataset, column: datasetColumns[dataset][0] }));
+    setForm((f) => ({ ...f, dataset, column: "" }));
   }
 
   async function handleSave() {
@@ -173,8 +193,8 @@ const ValidationRules = () => {
                 value={form.dataset}
                 onChange={(e) => handleDatasetChange(e.target.value)}
               >
-                {Object.keys(datasetColumns).map((d) => (
-                  <option key={d}>{d}</option>
+                {datasets.map((d) => (
+                  <option key={d.id} value={d.name}>{d.name}</option>
                 ))}
               </select>
             </Field>
@@ -185,8 +205,8 @@ const ValidationRules = () => {
                 value={form.column}
                 onChange={(e) => setForm((f) => ({ ...f, column: e.target.value }))}
               >
-                {datasetColumns[form.dataset].map((c) => (
-                  <option key={c}>{c}</option>
+                {columns.map((col) => (
+                  <option key={col} value={col}>{col}</option>
                 ))}
               </select>
             </Field>
@@ -268,8 +288,8 @@ const ValidationRules = () => {
                 }}
               >
                 <option>All Datasets</option>
-                {Object.keys(datasetColumns).map((d) => (
-                  <option key={d}>{d}</option>
+                {datasets.map((d) => (
+                  <option key={d.id}>{d.name}</option>
                 ))}
               </select>
               <div className="relative">
