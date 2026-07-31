@@ -1,5 +1,8 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col
+from pyspark.sql.functions import col, lit
+from functools import reduce
+from pyspark.sql.functions import monotonically_increasing_id
+from pyspark.sql.functions import collect_list
 
 def parse_rule_value(value):
     try:
@@ -53,6 +56,7 @@ spark = (
     .getOrCreate()
 )
 
+# Read Rule From MYsql
 rules_df = (
     spark.read
     .format("jdbc")
@@ -73,25 +77,6 @@ rules_df.show(truncate=False)
 
 rules = rules_df.collect()
 
-conditions = []
-
-for rule in rules:
-    condition = build_condition(rule)
-
-    conditions.append(condition)
-
-    print("------------------------------------------------------------------")
-    
-    print("Rule: ",rule.rule_name)
-    print("Condition: ", condition)
-
-
-final_condition = conditions[0]
-
-for condition in conditions[1:]:
-    final_condition = final_condition & condition
-
-
 # Read Bond.CSV file 
 df = (
     spark.read
@@ -99,18 +84,78 @@ df = (
     .option("inferSchema", True)
     .csv("/opt/spark/data/raw/bond_trades.csv")
 )
+df = df.withColumn("row_id", monotonically_increasing_id())  # this unique id is provided pyspark function 
 
 print(f"Total Records  : {df.count()}")
+
+
+
+conditions = []
+failed_rule_dfs = []
+
+for rule in rules:
+    condition = build_condition(rule)
+
+    conditions.append(condition)
+
+    failed_rule_df = (
+        df.filter(~condition)
+        .withColumn("Failed_rule",lit(rule.rule_name))
+        .withColumn("Failed_column",lit(rule.column_name))
+    )
+
+    failed_rule_dfs.append(failed_rule_df)
+
+    print("------------------------------------------------------------------")
+    
+    print("Rule: ",rule.rule_name)
+    print("Condition: ", condition)
+
+print(f"Total Failed rule Dataframe: {len(failed_rule_dfs)}")
+
+# Merge all failed rule into one dataframe
+all_failed_df = reduce(
+    lambda df1, df2: df1.unionByName(df2),
+    failed_rule_dfs
+)
+print("===================================== ALL FAILED RECORDS =====================================")
+all_failed_df.show(truncate=False)
+
+# Group by row_id(unique key) and merge more than one failed Rule
+failed_rule_dfs = (
+    all_failed_df.groupBy("row_id")
+    .agg(
+        collect_list("Failed_rule").alias("Failed_rules"),
+        collect_list("Failed_column").alias("Failed_columns")
+    )
+)
+failed_rule_dfs.show(truncate=False)
+
+final_condition = conditions[0]
+
+for condition in conditions[1:]:
+    final_condition = final_condition & condition
+
+
+
 
 valid_df = df.filter(final_condition)
 
 invalid_df = df.filter(~final_condition)
 
+# apply left join in invalid_df and failed_rule_dfs
+invalid_df = (
+    invalid_df.join(
+        failed_rule_dfs,
+        on="row_id",
+        how="left"
+    )
+)
 print("===================Valid Records=================")
 valid_df.show()
 
 print("===================InValid Records=================")
-invalid_df.show()
+invalid_df.show(truncate=False)
 
 print(f"valid Records   : {valid_df.count()}")
 print(f"Invalid Records   : {invalid_df.count()}")
@@ -141,6 +186,12 @@ print(f"Invalid Records   : {invalid_df.count()}")
 # print("Invalid Records :", invalid_df.count())
 
 
+
+
+
+# Remove row_id 
+invalid_df = invalid_df.drop("row_id")
+valid_df = valid_df.drop("row_id")
 
 
 # Store Valid Data
