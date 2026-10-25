@@ -140,8 +140,8 @@ for condition in conditions[1:]:
 valid_df = df.filter(final_condition)
 
 invalid_df = df.filter(~final_condition)
-# apply left join in invalid_df and failed_rule_dfs
 
+# apply left join in invalid_df and failed_rule_dfs
 invalid_df = (
     invalid_df.join(
         failed_rule_dfs,
